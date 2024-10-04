@@ -6,7 +6,7 @@ import (
 )
 
 // Task struct defines the car structure
-type Cars struct {
+type Car struct {
 	ID    int    `json:"id"`
 	Make  string `json:"make"`
 	Model string `json:"model"`
@@ -36,5 +36,10 @@ func CreateCar(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// Handle /cars route for creating cars
+	http.HandleFunc("/cars", CreateCar)
+
+	// Start the server
+	http.ListenAndServe(":8080", nil)
 
 }
