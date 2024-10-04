@@ -35,6 +35,12 @@ func CreateCar(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(newCar)
 }
 
+// GetCars retrieves all cars
+func GetCars(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(cars)
+}
+
 func main() {
 	// Handle /cars route for creating cars
 	http.HandleFunc("/cars", CreateCar)
