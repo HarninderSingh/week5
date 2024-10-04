@@ -1,11 +1,38 @@
 package main
 
-// Task struct defines the task structure
-type Task struct {
-	ID          int    `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Status      string `json:"status"`
+import (
+	"encoding/json"
+	"net/http"
+)
+
+// Task struct defines the car structure
+type Cars struct {
+	ID    int    `json:"id"`
+	Make  string `json:"make"`
+	Model string `json:"model"`
+	Year  int    `json:"year"`
+}
+
+var cars []Car
+var nextID = 1
+
+func CreateCar(w http.ResponseWriter, r *http.Request) {
+	// Create a new Car
+	var newCar Car
+
+	// Decode the request body into the newCar struct
+	json.NewDecoder(r.Body).Decode(&newCar)
+
+	// Assign an ID to the car
+	newCar.ID = nextID
+	nextID++
+
+	// Add the car to the slice
+	cars = append(cars, newCar)
+
+	// Send the created car as the response
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(newCar)
 }
 
 func main() {
